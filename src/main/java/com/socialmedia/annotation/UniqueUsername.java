@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface UniqueUsername {
 
-    String message() default "";
+    String message() default "{socialmedia.constraints.username.Unique.message}";
 
     Class<?>[] groups() default {};
 

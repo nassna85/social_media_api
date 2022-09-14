@@ -122,7 +122,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserHasUsername_ExceedsTheLengthLimit_receiveBadRequest() {
-        String valueOf61Chars = generateNumberOfChars(61);
+        String valueOf61Chars = TestUtil.generateNumberOfChars(61);
         User user = TestUtil.createValidUser(valueOf61Chars);
         // user.setUsername(valueOf61Chars);
         ResponseEntity<Object> response = postSignup(user, Object.class);
@@ -132,7 +132,7 @@ public class UserControllerTest {
     @Test
     public void postUser_whenUserHasDisplayName_ExceedsTheLengthLimit_receiveBadRequest() {
         User user = TestUtil.createValidUser();
-        String valueOf61Chars = generateNumberOfChars(61);
+        String valueOf61Chars = TestUtil.generateNumberOfChars(61);
         user.setDisplayName(valueOf61Chars);
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -141,7 +141,7 @@ public class UserControllerTest {
     @Test
     public void postUser_whenUserHasPassword_ExceedsTheLengthLimit_receiveBadRequest() {
         User user = TestUtil.createValidUser();
-        String valueOf256Chars = generateNumberOfChars(256);
+        String valueOf256Chars = TestUtil.generateNumberOfChars(256);
         user.setPassword(valueOf256Chars + "A1");
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -238,10 +238,6 @@ public class UserControllerTest {
 
     public <T> ResponseEntity<T> postSignup(Object request, Class<T> response) {
         return testRestTemplate.postForEntity(API_V_1_USERS, request, response);
-    }
-
-    private static String generateNumberOfChars(int max) {
-        return IntStream.rangeClosed(1, max).mapToObj(x -> "a").collect(Collectors.joining());
     }
 
 }

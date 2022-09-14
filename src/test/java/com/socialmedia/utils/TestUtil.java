@@ -2,6 +2,9 @@ package com.socialmedia.utils;
 
 import com.socialmedia.model.User;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class TestUtil {
 
     public static User createValidUser() {
@@ -16,5 +19,9 @@ public class TestUtil {
         User user = createValidUser();
         user.setUsername(username);
         return user;
+    }
+
+    public static String generateNumberOfChars(int max) {
+        return IntStream.rangeClosed(1, max).mapToObj(x -> "a").collect(Collectors.joining());
     }
 }
