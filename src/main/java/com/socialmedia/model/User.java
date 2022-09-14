@@ -23,7 +23,7 @@ public class User {
 
     @NotNull(message = "{socialmedia.constraints.username.NotNull.message}")
     @Size(min = 2, max = 60)
-    @UniqueUsername()
+    @UniqueUsername(message = "{socialmedia.constraints.username.Unique.message}")
     @Column(unique=true)
     private String username;
 
