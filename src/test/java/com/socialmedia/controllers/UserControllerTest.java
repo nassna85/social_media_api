@@ -190,24 +190,51 @@ public class UserControllerTest {
         User user = TestUtil.createValidUser(null);
         ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
-        assertThat(validationErrors.get("username")).isEqualTo("Username cannot be null");
+        assertThat(validationErrors.get("username")).isEqualTo("The username cannot be null");
     }
 
     @Test
-    public void postUser_whenUserHasNullPassword_receiveGenericMessageOfNullError() {
+    public void postUser_whenUserHasNullDisplayName_receiveMessageOfNullErrorForDisplayName() {
+        User user = TestUtil.createValidUser();
+        user.setDisplayName(null);
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+        Map<String, String> validationErrors = response.getBody().getValidationErrors();
+        assertThat(validationErrors.get("displayName")).isEqualTo("The displayName cannot be null");
+    }
+
+    @Test
+    public void postUser_whenUserHasNullPassword_receiveMessageOfNullErrorForPassword() {
         User user = TestUtil.createValidUser();
         user.setPassword(null);
         ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
-        assertThat(validationErrors.get("password")).isEqualTo("This field cannot be null");
+        assertThat(validationErrors.get("password")).isEqualTo("The password cannot be null");
     }
 
     @Test
-    public void postUser_whenUserHasInvalidLengthUsername_receiveGenericErrorOfSizeError() {
+    public void postUser_whenUserHasInvalidLengthUsername_receiveErrorMessageOfSizeForUsername() {
         User user = TestUtil.createValidUser("a");
         ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
-        assertThat(validationErrors.get("username")).isEqualTo("It must have minimum 2 and maximum 60 characters");
+        assertThat(validationErrors.get("username")).isEqualTo("The username must have minimum 2 and maximum 60 characters");
+    }
+
+    @Test
+    public void postUser_whenUserHasInvalidLengthDisplayName_receiveErrorMessageOfSizeForDisplayName() {
+        User user = TestUtil.createValidUser();
+        user.setDisplayName("a");
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+        Map<String, String> validationErrors = response.getBody().getValidationErrors();
+        assertThat(validationErrors.get("displayName")).isEqualTo("The displayName must have minimum 2 and maximum 60 characters");
+    }
+
+    @Test
+    public void postUser_whenUserHasInvalidLengthPassword_receiveErrorMessageOfSizeForPassword() {
+        User user = TestUtil.createValidUser();
+        user.setPassword("P4s");
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+        Map<String, String> validationErrors = response.getBody().getValidationErrors();
+        assertThat(validationErrors.get("password")).isEqualTo("The password must have minimum 8 and maximum 255 characters");
     }
 
     @Test

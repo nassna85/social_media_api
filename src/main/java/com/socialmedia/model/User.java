@@ -22,17 +22,17 @@ public class User {
     private long id;
 
     @NotNull(message = "{socialmedia.constraints.username.NotNull.message}")
-    @Size(min = 2, max = 60)
+    @Size(min = 2, max = 60, message = "{socialmedia.constraints.username.Size.message}")
     @UniqueUsername
     @Column(unique=true)
     private String username;
 
-    @NotNull
-    @Size(min = 2, max = 60)
+    @NotNull(message = "{socialmedia.constraints.displayName.NotNull.message}")
+    @Size(min = 2, max = 60, message = "{socialmedia.constraints.displayName.Size.message}")
     private String displayName;
 
-    @NotNull
-    @Size(min = 8, max = 255)
+    @NotNull(message = "{socialmedia.constraints.password.NotNull.message}")
+    @Size(min = 8, max = 255, message = "{socialmedia.constraints.password.Size.message}")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "{socialmedia.constraints.password.Pattern.message}")
     private String password;
 
