@@ -5,8 +5,8 @@ import com.socialmedia.error.ApiError;
 import com.socialmedia.model.User;
 import com.socialmedia.repository.UserRepository;
 import com.socialmedia.utils.TestUtil;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,14 +35,15 @@ public class UserControllerTest {
     @Autowired
     UserRepository userRepository;
 
-    @BeforeEach
+    @Before
     public void cleanup() {
-
+        System.out.println("cleanup running");
         userRepository.deleteAll();
     }
 
     @Test
     public void postUser_whenIsValid_receiveOk() {
+        // cleanup();
         User user = TestUtil.createValidUser();
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
