@@ -1,5 +1,6 @@
 package com.socialmedia.controllers;
 
+import com.socialmedia.error.ApiError;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,12 @@ public class LoginControllerTest {
         authenticate();
         ResponseEntity<Object> response = login(Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    public void postLogin_withoutUserCredentials_receiveApiError() {
+        ResponseEntity<ApiError> response = login(ApiError.class);
+        assertThat(response.getBody().getUrl()).isEqualTo(API_V_1_LOGIN);
     }
 
     private void authenticate() {
