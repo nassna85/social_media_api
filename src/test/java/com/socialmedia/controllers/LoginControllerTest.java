@@ -98,6 +98,53 @@ public class LoginControllerTest {
         assertThat(id).isEqualTo(user.getId());
     }
 
+    @Test
+    public void postLogin_withValidCredentials_receiveLoggedInUsersImage() {
+        User user = userService.save(TestUtil.createValidUser());
+        authenticate();
+        ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<Map<String, Object>>() {
+        });
+
+        Map<String, Object> body = response.getBody();
+        String image = (String) body.get("image");
+        assertThat(image).isEqualTo(user.getImage());
+    }
+
+    @Test
+    public void postLogin_withValidCredentials_receiveLoggedInUsersDisplayName() {
+        User user = userService.save(TestUtil.createValidUser());
+        authenticate();
+        ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<Map<String, Object>>() {
+        });
+
+        Map<String, Object> body = response.getBody();
+        String displayName = (String) body.get("displayName");
+        assertThat(displayName).isEqualTo(user.getDisplayName());
+    }
+
+    @Test
+    public void postLogin_withValidCredentials_receiveLoggedInUsersUsername() {
+        User user = userService.save(TestUtil.createValidUser());
+        authenticate();
+        ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<Map<String, Object>>() {
+        });
+
+        Map<String, Object> body = response.getBody();
+        String username = (String) body.get("username");
+        assertThat(username).isEqualTo(user.getUsername());
+    }
+
+    @Test
+    public void postLogin_withValidCredentials_notReceiveLoggedInUsersPassword() {
+        User user = userService.save(TestUtil.createValidUser());
+        authenticate();
+        ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<Map<String, Object>>() {
+        });
+
+        Map<String, Object> body = response.getBody();
+        assertThat(body.containsKey("password")).isFalse();
+    }
+
     private void authenticate() {
         testRestTemplate
                 .getRestTemplate()
