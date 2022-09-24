@@ -1,18 +1,20 @@
 package com.socialmedia.controller;
 
-import com.socialmedia.error.ApiError;
-import org.springframework.http.HttpStatus;
+import com.socialmedia.annotation.CurrentUser;
+import com.socialmedia.model.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.AccessDeniedException;
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {
 
     @PostMapping
-    public void handleLogin() {
-
+    public Map<String, Object> handleLogin(@CurrentUser User loggedInUser) {
+        return Collections.singletonMap("id", loggedInUser.getId());
     }
 
 }

@@ -35,7 +35,7 @@ public class UserControllerTest {
 
     @Before
     public void cleanup() {
-        System.out.println("cleanup running");
+        System.out.println("/* ------ Test UserController - Cleanup running ------ */");
         userRepository.deleteAll();
     }
 

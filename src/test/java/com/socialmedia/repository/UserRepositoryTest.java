@@ -1,6 +1,7 @@
 package com.socialmedia.repository;
 
 import com.socialmedia.model.User;
+import com.socialmedia.utils.TestUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,7 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUsername_whenUserExists_returnsUser() {
-        User user = new User();
-        user.setUsername("test-user");
-        user.setDisplayName("test-display");
-        user.setPassword("P4ssword");
-
-        testEntityManager.persist(user);
+        testEntityManager.persist(TestUtil.createValidUser());
 
         User inDB = userRepository.findByUsername("test-user");
         assertThat(inDB).isNotNull();
